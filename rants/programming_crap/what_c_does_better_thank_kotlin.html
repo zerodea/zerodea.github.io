@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>What C does Better than Kotlin</title>
+    <link href="/utils/style.css" rel="stylesheet" />
+    <link href="/utils/header.css" rel="stylesheet" />
+    <link href="/utils/footer.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="top-header">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/rants/rants.html">Rants</a></li>
+                <li><a href="/projects/projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h3 class="article-title">What C does Better than Kotlin</h3>
+                    <div class="text-container">
+<p>
+Kotlin is a great language and I have raved about it a lot, but there is a beauty to C.
+There is a beauty in doing things "ugly". People hate C because people use goto and
+macros suck and pointers to pointers to pointers are a thing, but sometimes having
+these tools make things so much easier.
+
+<br/><br/>
+
+Asynchronous code and coroutines are awesome in Kotlin. Flows are beautiful, channels
+are simple and not dealing with callbacks is glorious, but there are situations where
+C is better. Yes, I said it, C is better than Kotlin in some aspects of asynchronous
+code. 
+
+<br/><br/>
+
+Lets say we spawn two asynchronous tasks and we have to wait for them to reach
+a certain point of their execution before continuing the main tasks execution. I will
+write code that I actually had to deal with in Kotlin, (unnecessary stuff has been omitted):
+
+<br/><br/>
+
+val mutex = Mutex(locked = false)
+var remainingObserverSetups = 2
+
+<br/><br/>
+
+launch {
+mutex.lock()
+flowA
+.onSubscription {
+remainingObserverSetups--
+mutex.unlock()
+}
+.collect()
+}
+
+<br/><br/>
+
+launch {
+mutex.lock()
+flowB
+.onSubscription {
+remainingObserverSetups--
+mutex.unlock()
+}
+.collect()
+}
+
+<br/><br/>
+
+do {
+mutex.lock()
+if (remainingObserverSetups == 0) {
+mutex.unlock()
+break;
+}
+mutex.unlock()
+} while(true)
+
+<br/><br/>
+
+
+<br/><br/>
+
+There is another option which is to use two different mutexes. Or if we extrapolate
+this to many, an array or list of mutexes. The code would then look like this:
+
+<br/><br/>
+
+
+<br/><br/>
+
+val mutexes = buildList<Mutex>(2) { Mutex(locked = true) }
+
+<br/><br/>
+
+launch {
+flowA
+.onSubscription {
+mutexes[0].unlock() 
+}
+.collect()
+}
+
+<br/><br/>
+
+launch {
+mutex.lock()
+flowB
+.onSubscription {
+mutexes[1].unlock()
+}
+.collect()
+}
+
+<br/><br/>
+
+for (mutex in mutexes) {
+mutex.lock()
+}
+
+<br/><br/>
+
+
+<br/><br/>
+
+This is shitto. Well, of course it is man, you should use a Semaphore. Yes, that is
+what Semaphores are for, but unfortunately Kotlin and many other modern languages
+have made the decision to protect users. Therefore they have made Semaphores work
+more closely as what they are supposed to do, which is limit the amount of threads
+that can access a resource or do something, but made it useless for this situation.
+
+<br/><br/>
+
+In C because we can do what we want we can setup a Semaphore and use that instead
+of a weird do-while loop and an unnecessary remainingObserverSetups value or having
+an array/list of mutexes. This is what it would look like in C:
+
+<br/><br/>
+
+
+<br/><br/>
+
+static sem_t sem;
+
+<br/><br/>
+
+void *doStuffFunc(void) {
+sem_post(&sem);
+}
+
+<br/><br/>
+
+sem_init(&sem, 0, -2);
+
+<br/><br/>
+
+pthread_t t[2];
+pthread_create(&t[0], NULL, doStuffFunc, NULL);
+pthread_create(&t[1], NULL, doStuffFunc, NULL);
+
+<br/><br/>
+
+sem_wait(&sem);
+
+<br/><br/>
+
+
+<br/><br/>
+
+The magic of this C code is that we initialize the sempahore to -2 which means
+that when we call sem_wait in the main thread it will wait until the 2 spawned
+threads have called sem_post. Is this what Semaphores should be used for? I don't
+know, but it is awesome that it is allowed and the amount of code and weird things
+that have to be done are lower. 
+
+<br/><br/>
+
+    </p>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+
+<footer class="footer">
+    <nav>
+        <ul>
+            <li><a target="_blank" href="https://www.twitch.com"><img src="/images/twitch.svg" alt="My Twitch Channel"/></a></li>
+            <li><a target="_blank" href="https://www.youtube.com"><img src="/images/youtube.png" alt="My Youtube Channel"/></a></li>
+            <li><a target="_blank" href="https://www.reddit.com"><img src="/images/reddit.svg" alt="My Reddit Account"/></a></li>
+            <li><a target="_blank" href="https://www.twitter.com"><img src="/images/twitter.svg" alt="My Twitter Account"/></a></li>
+        </ul>
+    </nav>
+</footer>
+    </body>
+</html>

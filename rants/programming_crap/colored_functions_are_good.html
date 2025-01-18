@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Colored Functions Are Good</title>
+    <link href="/utils/style.css" rel="stylesheet" />
+    <link href="/utils/header.css" rel="stylesheet" />
+    <link href="/utils/footer.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="top-header">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/rants/rants.html">Rants</a></li>
+                <li><a href="/projects/projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h3 class="article-title">Colored Functions Are Good</h3>
+                    <div class="text-container">
+<p>
+There was a
+a few years ago about colored functions. It has become
+so popular that people talk about colored functions in the context of concurrency
+and almost everyone in the software business understands what they are talking about.
+If you haven't read the article go ahead and read it, it's great (even if it is wrong
+in some regards) and necessary to understand my following rant. 
+
+<br/><br/>
+
+Golang devs like to say that their functions are not colored. "We just use go func
+and that runs a function as a goroutine without having to think about colors."
+That is the biggest horseshit anyone has ever said. If you have a function that
+returns a value and try to run that function as a goroutine and wait for the
+result you are basically calling go *get* fuct. You have to add a bunch of ceremony
+i.e. channels to functions that are going to be called as a goroutine. So by
+passing a channel in the declaration of the function you are coloring that function.
+You are saying hey this function should be called as a goroutine and you should
+wait for the result on this channel. If instead you return a value from the function
+then you are telling the user that this function should not be run as a goroutine
+and if they do want to run it as a goroutine they should wrap it in their own function
+that receives a channel that then calls the function that returns a value and send
+that value through the channel. So much for not coloring functions.
+
+<br/><br/>
+
+I'm picking on Golang, but the truth is there is no way around this. How can you
+return something from an asynchronous function to another context? You have to use a
+channel, as is done in golang, or use whatever mechanism your language of choice uses.
+What I am picking on is the fact that by trying to uncolor the functions, and hide
+this implicit complexity, instead of improving on the status quo they made it worse.
+
+<br/><br/>
+
+In Kotlin colored functions are called suspendable functions because they can suspend
+their execution and are declared by appending `suspend` before the rest of the function
+declaration e.g. `suspend fun x()`. Suspendable functions can only be called in a
+`CoroutineScope` which requires a `CoroutineContext`. By having to explicitly define the
+context we can control whether a coroutine runs in the main thread or a different one. We
+can also make sure that various coroutines run on the same thread. This implementation
+makes it easier to use threads and provides a lot of benefits, but does not attempt to
+oversimplify a hard problem and hide the complexity that exists, it simply makes it easy
+to do easy things and making it easier to do hard things.
+
+<br/><br/>
+
+Marking suspendable functions and making the user handle them explicitly brings another
+benefit: it indicates that a function "blocks", but doesn't spin. The suspendable
+function will yield so other threads can run while waiting as opposed to busy waiting.
+In a language such as Go a function could block a thread using busy waiting and the
+only way of knowing this would be by reading the documentation. Yes, we should always
+RTFD(ocs), but another great rule is that APIs should be easy to use and hard to misuse.
+By making the user aware of whether a function uses busy waiting or yields with a simple
+coloring you make it harder to misuse the function and end up blocking a computer because
+all your threads are busy waiting.
+
+<br/><br/>
+
+Making the coloring explicit like in Kotlin is way better than trying to hide your crayons
+like golang does. By coloring your functions explicitly you make it way more clear if a
+function is concurrent and should be called within a coroutine, or whether it's a regular
+function that can be called in any context. You also make it's design and implementation
+explicit by indicating whether the function yields or blocks just with it's signature.
+    </p>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+
+<footer class="footer">
+    <nav>
+        <ul>
+            <li><a target="_blank" href="https://www.twitch.com"><img src="/images/twitch.svg" alt="My Twitch Channel"/></a></li>
+            <li><a target="_blank" href="https://www.youtube.com"><img src="/images/youtube.png" alt="My Youtube Channel"/></a></li>
+            <li><a target="_blank" href="https://www.reddit.com"><img src="/images/reddit.svg" alt="My Reddit Account"/></a></li>
+            <li><a target="_blank" href="https://www.twitter.com"><img src="/images/twitter.svg" alt="My Twitter Account"/></a></li>
+        </ul>
+    </nav>
+</footer>
+    </body>
+</html>

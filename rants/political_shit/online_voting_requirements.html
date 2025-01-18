@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Online Voting Requirements</title>
+    <link href="/utils/style.css" rel="stylesheet" />
+    <link href="/utils/header.css" rel="stylesheet" />
+    <link href="/utils/footer.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="top-header">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/rants/rants.html">Rants</a></li>
+                <li><a href="/projects/projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h3 class="article-title">Online Voting Requirements</h3>
+                    <div class="text-container">
+<p>
+</p>
+<h3> Online Voting Requirements</h3>
+<p>
+
+<br/><br/>
+
+</p>
+<h3> What does an online voting system need?</h3>
+<p>
+
+<br/><br/>
+
+- Allow voting multiple times.
+Only the last vote should count, but users should be able to vote more than once to reduce the chance of 
+coercion. If a user is coerced into voting for X they can then change that vote by casting another vote 
+for Y or Z or even blank.
+
+<br/><br/>
+
+- Repudiation. 
+A user should not be able to prove who they voted for. Only that their vote has been tallied. This again
+is a way to reduce the chances that a vote can been coerced.
+
+<br/><br/>
+
+</p>
+<h3> What is nice to have?</h3>
+<p>
+
+<br/><br/>
+
+- Allow a user to verify that their vote has been tallied.
+After voting a user should be able to check that their vote has been tallied.
+
+<br/><br/>
+
+- Anonymous voting.
+No one should be able to know what a user voted. "How is this nice to have?", you may ask. "Voting should
+always be anonymous", you might say. I disagree, and here comes my rant that justifies it. It would
+definitely be nice if voting was anonymous while keeping with all the other much more necessary features
+of online voting, but that is not currently possible and some cryptographers think it will never be. Some
+people think that that is enough to disregard online voting, but I think that the benefits of online voting
+are too great to pass on just because of this and that we can get good enough anonymity to justify voting
+online.
+
+<br/><br/>
+
+When democracy was starting out, and still today in some smaller elections, votes were cast with a show of
+hands. This worked well, but there is one big issue which is that people can be coerced into voting for
+something they don't agree with. To fix this, we now have paper ballots that we place inside an envelope.
+This is great, now our neighbor can't know what we voted for and we don't have to give in into peer pressure,
+but does this actually solve the anonymity problem? This solves the most basic problem, which can also be
+easily solved for online voting. The bigger issues that we think anonymity solves and why we think it is so
+crucial is to tackle interference by government or another large organization.
+
+<br/><br/>
+
+Solving this bigger problem with online voting is potentially impossible, but we can do much better than
+with paper ballots. If the government wanted to know what every citizen was voting for they could. Technology
+has come a long way and cameras are very small and even if found, it is hard to prove what entity placed
+them. Well, that would be a crazy conspiracy and someone would speak up and tell everyone about it. Well,
+maybe, but why would that not be the case with online voting? With online voting it can still be hard for
+a malicious party to get access to the deanonymized data without a large scale conspiracy. 
+
+<br/><br/>
+
+Okay, so the government can spy on us and know what we voted for, but what about a thug. A criminal organization
+could coerce people into voting a particular way. Yes, they could, if we are talking about paper ballots.
+With paper ballots a mobsters lackey could be in the voting area making sure that people are picking up the 
+"correct" ballot and placing it in envelopes. But, that's illegal, they can't do that. They can, and illegal
+is not really an argument against it because election interference is always illegal, whether the election
+is online or on paper. This type of election interference is actually made harder with online voting, so 
+despite online voting not being perfect it is actually much better than what we currently have.
+
+<br/><br/>
+
+</p>
+<h3> What is impossible?</h3>
+<p>
+
+<br/><br/>
+
+- Easy to understand
+Many people argue that the advantage of paper ballots is that they are very easy to understand and therefore
+people can trust it. The truth is, most people have no idea how paper ballots or elections work or how 
+election fraud and irregularities are detected using just some votes. The truth is, most people couldn't
+count high enough to count votes. Most people don't even know how to divide two numbers with 3 or more digits.
+If we could only use technology that is easy to understand we wouldn't even be using fire or the wheel and
+the only acceptable form of government would be a military dictatorship: what this person says goes because
+big guns.
+
+<br/><br/>
+
+Despite not striving for perfect anonymity an online voting system would still be complex, but it could be
+understood and verified by many people. Everyone else would have to trust the people that verify the system,
+just like in our current system. Trust, maybe unfortunately, is an essential component of our societies.
+
+<br/><br/>
+
+</p>
+<h5> Getting into the weeds. How would the online voting system work?</h5>
+<p>
+
+<br/><br/>
+
+The first step, and probably the most complicated, is that every citizen would need a digital signature.
+These signatures are already common in many European countries to handle governmental task such as paying
+taxes or getting a criminal records certificate. This is the hardest part because people will lose it and/or
+not know how to use it. Making the user experience seamless will be very complicated, but the simplest way
+I can think of would be that the signature is uploaded to the citizen's mobile phone and they cannot extract it.
+The voting app can then use the key, but never read it. This is not magic, this is already something that most 
+smartphones can handle. When the user changes their phone or loses it, they would have to go back to the police
+or wherever and get another key. For people that prefer to handle their keys themselves, the keys could be
+given out in print and the user would then put them on their phone, computer, or memorize it if they please.
+
+<br/><br/>
+
+The first problem that arises from this is that a criminal could require their victims to take a phone given to
+them by the criminal, put the keys there and then hand the phone back to the criminal. The solution to this is
+that when a new digital signature is issued for a citizen the old one expires and is no longer valid, but when
+trying to use it to vote there will be no visible error, the vote will be silently ignored.
+
+<br/><br/>
+
+If we manage to get everyone a digital signature, the rest is straightforward.
+Firstly, the app displays the ongoing votes the user selects a vote and then selects their opinion and bam the 
+vote with the signature is cast and sent to the server. To make sure that the app is the correct app something
+called reproducible builds would be used. Most people will have no idea what that is, but they don't have to.
+As long as some people verify the builds and no anomalies are found we can statistically say that the downloadable
+app version was not tampered with.
+
+<br/><br/>
+
+Secondly, the server. The server will have the keys to the temple. It will know everything and nothing will be
+secret to the server. That is what makes this implementation so simple. In the server nothing is anonymous. It
+knows what everyone voted for, making it easy to detect that a user has already voted and therefore this second
+vote should override the first and not be added on top of the first. Everything is easy for the server because
+there are no secrets. The hard part is making sure that despite the server knowing everything the people in
+control of the server can't access this very sensitive information. This amazingly, is also a solved problem.
+The information reaches the server encrypted, the server decrypts it and handles it, and when it has to store
+information it encrypts it before doing so.
+
+<br/><br/>
+
+It might be necessary to gain access to the voting information. Maybe a problem has been detected and having
+access to the information will prove that an election was tampered with. To handle this there would have
+a master key that gives people access to the system. This would not be a key that any one person has. The key
+can be split amongst N different entities and require at least K of these entities to give their share of the
+key to access the system. One of these keys could be given the the supreme court, another to the senate, another
+to a random person living on a boat, and only when these people come together can the system be accessed. On
+top of that, the server won't actually know that John Doe has cast their vote for Jane Doe, it will know that
+a citizen with X digital signature has cast a vote for Jane Doe. So if malicious entities wanted to figure out
+what specific people cast a vote for Jane Doe they would need to access the system, get the voting data and then
+cross reference this information with information regarding what citizen has which digital signature. By keeping
+a close eye on people accessing the unencrypted information on the server and that that information is never
+cross referenced we can be pretty sure that no one can know what a particular person voted for.
+
+<br/><br/>
+
+The server, of course, would have to be verified by multiple parties and multiple parties would have to keep an
+eye on it to make sure that no one from either the inside or outside can break into the server and interfere 
+with the system. 
+
+<br/><br/>
+
+Again, this system would not be a simple system, but it is a feasible system with today's technology and it
+could be improved as our knowledge of cryptography improves.
+
+<br/><br/>
+
+</p>
+<h5> What if a citizen doesn't have a phone or a computer or anything else?</h5>
+<p>
+
+<br/><br/>
+
+For those people, there should be an option to pay by mail. Many places will require some infrastructure
+improvements, but given that most people would not vote by mail, it should not be prohibitively expensive.
+
+<br/><br/>
+
+</p>
+<h5> An example of how the key could be split in a country like spain would be:</h5>
+<p>
+
+<br/><br/>
+
+1. Divide the key into 5 parts. All of these parts are required to access the voting data.
+2. Give 1 part to the king and 1 part to the prime minister
+3. Divide another of the parts amongst all the members of parliament requiring at least 75% of the subparts to 
+recreate the part.
+4. Divide another of the parts amongst all the members of the sentate requiring at least 75% of the subparts to 
+recreate the part.
+5a. 1 of the remaining parts is divided into two parts only needing 1 of these two parts to create the part.
+5b. Divide these 2 half parts into another two parts required both quarter parts to create a half part. 
+5c. Give one quarter part to the supreme court and its counterpart to a randomly chosen lower court that rotates.
+5d. To create the other half part give one quarter part, again, to the supreme court and its counterpart to 
+another randomly chosen lower court that rotates.
+
+<br/><br/>
+
+This is just an example and if this voting scheme were implemented the senate and parliament would be very
+different or potentially not exist rendering this distribution ineffective, but a different distribution could
+be found which makes it very hard for a single entity to act maliciously.
+    </p>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+
+<footer class="footer">
+    <nav>
+        <ul>
+            <li><a target="_blank" href="https://www.twitch.com"><img src="/images/twitch.svg" alt="My Twitch Channel"/></a></li>
+            <li><a target="_blank" href="https://www.youtube.com"><img src="/images/youtube.png" alt="My Youtube Channel"/></a></li>
+            <li><a target="_blank" href="https://www.reddit.com"><img src="/images/reddit.svg" alt="My Reddit Account"/></a></li>
+            <li><a target="_blank" href="https://www.twitter.com"><img src="/images/twitter.svg" alt="My Twitter Account"/></a></li>
+        </ul>
+    </nav>
+</footer>
+    </body>
+</html>
